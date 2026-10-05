@@ -15,9 +15,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,6 +50,7 @@ class MainActivity : ComponentActivity() {
 fun TipCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmountInput by remember { mutableStateOf("") }
     var dishesCountInput by remember { mutableStateOf("") }
+    var tipPercent by remember { mutableFloatStateOf(15f) }
 
     Column(
         modifier = modifier
@@ -79,6 +82,20 @@ fun TipCalculatorScreen(modifier: Modifier = Modifier) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
+
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = "Чаевые: ${tipPercent.toInt()}%",
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+            Slider(
+                value = tipPercent,
+                onValueChange = { tipPercent = it },
+                valueRange = 0f..25f,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 
